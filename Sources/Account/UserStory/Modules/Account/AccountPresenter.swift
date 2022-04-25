@@ -19,8 +19,7 @@ public protocol AccountDateFormatProtocol {
 extension DateFormatService: AccountDateFormatProtocol { }
 
 public protocol AccountModuleOutput: AnyObject {
-    func userAuthorized()
-    func profileEdited()
+    func accountModuleFinished()
 }
 
 public protocol AccountModuleInput: AnyObject {

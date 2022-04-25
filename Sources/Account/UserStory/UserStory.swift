@@ -13,8 +13,8 @@ import AlertManager
 import Utils
 
 public protocol AccountRouteMap: AnyObject {
-    func createAccountModule() -> ModuleProtocol
-    func editAccountModule() -> ModuleProtocol
+    func createAccountModule() -> AccountModule
+    func editAccountModule() -> AccountModule
 }
 
 public final class AccountUserStory {
@@ -25,11 +25,11 @@ public final class AccountUserStory {
 }
 
 extension AccountUserStory: AccountRouteMap {
-    public func createAccountModule() -> ModuleProtocol {
+    public func createAccountModule() -> AccountModule {
         return accountModule(context: .create)
     }
     
-    public func editAccountModule() -> ModuleProtocol {
+    public func editAccountModule() -> AccountModule {
         let safeResolver = container.synchronize()
         guard let authManager = safeResolver.resolve(AuthManagerProtocol.self),
               let accountProfile = authManager.currentAccount?.profile else { fatalError(ErrorMessage.dependency.localizedDescription) }

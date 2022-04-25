@@ -22,7 +22,7 @@ public protocol AccountModuleOutput: AnyObject {
     func userAuthorized()
 }
 
-protocol AccountModuleInput: AnyObject {
+public protocol AccountModuleInput: AnyObject {
     
 }
 

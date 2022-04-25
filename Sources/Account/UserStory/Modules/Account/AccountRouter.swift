@@ -34,14 +34,14 @@ extension AccountRouter: AccountRouterInput {
     func openRegionSelection(output: SelectionModuleOutput) {
         let module = RegionUserStory().countryAndCityModule()
         module.output = output
-        self.push(module)
+        self.push(module.view)
     }
 }
 
 private extension AccountRouter {
-    func push(_ module: ModuleProtocol) {
+    func push(_ view: UIViewController) {
         let transition = PushTransition()
-        transition.destination = module.view
+        transition.destination = view
         transition.source = transitionHandler
         transition.perform(nil)
     }

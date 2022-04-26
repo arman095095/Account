@@ -11,14 +11,7 @@ import Managers
 import Utils
 
 protocol AccountInteractorInput: AnyObject {
-    func createAccount(username: String,
-                       info: String,
-                       sex: String,
-                       country: String,
-                       city: String,
-                       birthday: String,
-                       userImage: UIImage)
-    func editAccount(username: String,
+    func sendAccount(username: String,
                      info: String,
                      sex: String,
                      country: String,
@@ -35,11 +28,9 @@ protocol AccountInteractorInput: AnyObject {
 }
 
 protocol AccountInteractorOutput: AnyObject {
-    func successCreatedProfile()
-    func failedCreateProfile(message: String)
-    func successEditedProfile()
-    func failedEditProfile(message: String)
-    func failedValidate(message: String)
+    
+    func successSendedProfile()
+    func failureSendProfile(message: String)
     func successValidated(username: String,
                           info: String,
                           sex: String,
@@ -52,12 +43,12 @@ protocol AccountInteractorOutput: AnyObject {
 final class AccountInteractor {
     
     weak var output: AccountInteractorOutput?
-    private let authManager: AuthManagerProtocol
+    private let profileInfoManager: ProfileInfoManagerProtocol
     private let validator: ProfileValidatorProtocol
     
-    init(authManager: AuthManagerProtocol,
+    init(profileInfoManager: ProfileInfoManagerProtocol,
          validator: ProfileValidatorProtocol) {
-        self.authManager = authManager
+        self.profileInfoManager = profileInfoManager
         self.validator = validator
     }
 }
@@ -78,7 +69,7 @@ extension AccountInteractor: AccountInteractorInput {
               let city = city,
               let birthday = birthday,
               let image = userImage else {
-            output?.failedValidate(message: ProfileValidator.Error.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
             return
         }
         
@@ -88,19 +79,19 @@ extension AccountInteractor: AccountInteractorInput {
                                         birthday: birthday,
                                         country: country,
                                         city: city) else {
-            output?.failedValidate(message: ProfileValidator.Error.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
             return
         }
         guard validator.validateSelectedAge(with: birthday) else {
-            output?.failedValidate(message: ProfileValidator.Error.ageNotValid.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.ageNotValid.localizedDescription)
             return
         }
         guard validator.validateSelectedAgeNoLess16(date: birthday) else {
-            output?.failedValidate(message: ProfileValidator.Error.ageLess16.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.ageLess16.localizedDescription)
             return
         }
         guard validator.validateSelectedImage(userImage: image) else {
-            output?.failedValidate(message: ProfileValidator.Error.photoNotAdded.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.photoNotAdded.localizedDescription)
             return
         }
         output?.successValidated(username: username,
@@ -112,31 +103,7 @@ extension AccountInteractor: AccountInteractorInput {
                                  userImage: image)
     }
     
-    func createAccount(username: String,
-                       info: String,
-                       sex: String,
-                       country: String,
-                       city: String,
-                       birthday: String,
-                       userImage: UIImage) {
-        guard let imageData = userImage.jpegData(compressionQuality: 0.4) else { return }
-        authManager.createAccount(username: username,
-                                  info: info,
-                                  sex: sex,
-                                  country: country,
-                                  city: city,
-                                  birthday: birthday,
-                                  userImage: imageData) { [weak self] result in
-            switch result {
-            case .success:
-                self?.output?.successCreatedProfile()
-            case .failure(let error):
-                self?.output?.failedCreateProfile(message: error.localizedDescription)
-            }
-        }
-    }
-    
-    func editAccount(username: String,
+    func sendAccount(username: String,
                      info: String,
                      sex: String,
                      country: String,
@@ -144,19 +111,18 @@ extension AccountInteractor: AccountInteractorInput {
                      birthday: String,
                      userImage: UIImage) {
         guard let imageData = userImage.jpegData(compressionQuality: 0.4) else { return }
-        authManager.editAccount(username: username,
-                                info: info,
-                                sex: sex,
-                                country: country,
-                                city: city,
-                                birthday: birthday,
-                                image: imageData,
-                                imageURL: nil) { [weak self] result in
+        profileInfoManager.sendProfile(username: username,
+                                       info: info,
+                                       sex: sex,
+                                       country: country,
+                                       city: city,
+                                       birthday: birthday,
+                                       image: imageData) { [weak self] result in
             switch result {
             case .success:
-                self?.output?.successEditedProfile()
+                self?.output?.successSendedProfile()
             case .failure(let error):
-                self?.output?.failedEditProfile(message: error.localizedDescription)
+                self?.output?.failureSendProfile(message: error.localizedDescription)
             }
         }
     }

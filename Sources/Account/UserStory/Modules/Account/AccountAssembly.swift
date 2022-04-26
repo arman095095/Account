@@ -17,12 +17,12 @@ public typealias AccountModule = Module<AccountModuleInput, AccountModuleOutput>
 
 enum AccountAssembly {
     static func makeModule(alertManager: AlertManagerProtocol,
-                           authManager: AuthManagerProtocol,
+                           profileInfoManager: ProfileInfoManagerProtocol,
                            profileValidator: ProfileValidatorProtocol,
                            context: InputFlowContext) -> AccountModule {
         let view = AccountViewController()
         let router = AccountRouter()
-        let interactor = AccountInteractor(authManager: authManager,
+        let interactor = AccountInteractor(profileInfoManager: profileInfoManager,
                                            validator: profileValidator)
         let stringFactory = AccountStringFactory()
         let dateFormatter = DateFormatService()

@@ -31,8 +31,8 @@ extension AccountUserStory: AccountRouteMap {
     
     public func editAccountModule() -> AccountModule {
         let safeResolver = container.synchronize()
-        guard let authManager = safeResolver.resolve(AuthManagerProtocol.self),
-              let accountProfile = authManager.currentAccount?.profile else { fatalError(ErrorMessage.dependency.localizedDescription) }
+        guard let accountManager = safeResolver.resolve(AccountManagerProtocol.self),
+              let accountProfile = accountManager.account?.profile else { fatalError(ErrorMessage.dependency.localizedDescription) }
         return accountModule(context: .edit(dto: accountProfile))
     }
 }
@@ -41,13 +41,13 @@ extension AccountUserStory: RouteMapPrivate {
     func accountModule(context: InputFlowContext) -> AccountModule {
         let safeResolver = container.synchronize()
         guard let alertManager = safeResolver.resolve(AlertManagerProtocol.self),
-              let authManager = safeResolver.resolve(AuthManagerProtocol.self),
+              let profileInfoManager = safeResolver.resolve(ProfileInfoManagerProtocol.self,
+                                                            name: context.managerName),
               let profileValidator = safeResolver.resolve(ProfileValidatorProtocol.self) else {
             fatalError(ErrorMessage.dependency.localizedDescription)
         }
-              
         let module = AccountAssembly.makeModule(alertManager: alertManager,
-                                                authManager: authManager,
+                                                profileInfoManager: profileInfoManager,
                                                 profileValidator: profileValidator,
                                                 context: context)
         return module

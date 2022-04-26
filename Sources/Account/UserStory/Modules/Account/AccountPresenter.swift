@@ -29,6 +29,15 @@ public protocol AccountModuleInput: AnyObject {
 enum InputFlowContext {
     case edit(dto: ProfileModelProtocol)
     case create
+    
+    var managerName: String {
+        switch self {
+        case .edit:
+            return "Account"
+        case .create:
+            return "Auth"
+        }
+    }
 }
 
 protocol AccountViewOutput: AnyObject {
@@ -119,29 +128,19 @@ extension AccountPresenter: SelectionModuleOutput {
 }
 
 extension AccountPresenter: AccountInteractorOutput {
-    func successEditedProfile() {
+    func successSendedProfile() {
         view?.setLoading(on: false)
-        alertManager.present(type: .success, title: stringFactory.successEditedMessage)
-        router.dismissModule()
+        switch context {
+        case .edit:
+            alertManager.present(type: .success, title: stringFactory.successEditedMessage)
+            router.dismissModule()
+        case .create:
+            alertManager.present(type: .success, title: stringFactory.successCreatedMessage)
+            output?.userSuccessAuthorized()
+        }
     }
     
-    func failedEditProfile(message: String) {
-        view?.setLoading(on: false)
-        alertManager.present(type: .error, title: message)
-    }
-    
-    func successCreatedProfile() {
-        view?.setLoading(on: false)
-        alertManager.present(type: .success, title: stringFactory.successCreatedMessage)
-        output?.userSuccessAuthorized()
-    }
-    
-    func failedCreateProfile(message: String) {
-        view?.setLoading(on: false)
-        alertManager.present(type: .error, title: message)
-    }
-    
-    func failedValidate(message: String) {
+    func failureSendProfile(message: String) {
         view?.setLoading(on: false)
         alertManager.present(type: .error, title: message)
     }
@@ -153,24 +152,13 @@ extension AccountPresenter: AccountInteractorOutput {
                           city: String,
                           birthday: String,
                           userImage: UIImage) {
-        switch context {
-        case .edit:
-            interactor.editAccount(username: username,
-                                   info: info,
-                                   sex: sex,
-                                   country: country,
-                                   city: city,
-                                   birthday: birthday,
-                                   userImage: userImage)
-        case .create:
-            interactor.createAccount(username: username,
-                                     info: info,
-                                     sex: sex,
-                                     country: country,
-                                     city: city,
-                                     birthday: birthday,
-                                     userImage: userImage)
-        }
+        interactor.sendAccount(username: username,
+                               info: info,
+                               sex: sex,
+                               country: country,
+                               city: city,
+                               birthday: birthday,
+                               userImage: userImage)
     }
 }
 

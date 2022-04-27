@@ -19,7 +19,7 @@ public protocol AccountDateFormatProtocol {
 extension DateFormatService: AccountDateFormatProtocol { }
 
 public protocol AccountModuleOutput: AnyObject {
-    func userSuccessAuthorized()
+    func userSuccessAuthorized(userID: String, account: AccountModelProtocol)
 }
 
 public protocol AccountModuleInput: AnyObject {
@@ -128,7 +128,7 @@ extension AccountPresenter: SelectionModuleOutput {
 }
 
 extension AccountPresenter: AccountInteractorOutput {
-    func successSendedProfile() {
+    func successSendedProfile(accountModel: AccountModelProtocol) {
         view?.setLoading(on: false)
         switch context {
         case .edit:
@@ -136,7 +136,7 @@ extension AccountPresenter: AccountInteractorOutput {
             router.dismissModule()
         case .create:
             alertManager.present(type: .success, title: stringFactory.successCreatedMessage)
-            output?.userSuccessAuthorized()
+            output?.userSuccessAuthorized(userID: accountModel.profile.id, account: accountModel)
         }
     }
     

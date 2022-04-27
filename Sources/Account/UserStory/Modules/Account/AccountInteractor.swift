@@ -29,7 +29,7 @@ protocol AccountInteractorInput: AnyObject {
 
 protocol AccountInteractorOutput: AnyObject {
     
-    func successSendedProfile()
+    func successSendedProfile(accountModel: AccountModelProtocol)
     func failureSendProfile(message: String)
     func successValidated(username: String,
                           info: String,
@@ -119,8 +119,8 @@ extension AccountInteractor: AccountInteractorInput {
                                        birthday: birthday,
                                        image: imageData) { [weak self] result in
             switch result {
-            case .success:
-                self?.output?.successSendedProfile()
+            case .success(let account):
+                self?.output?.successSendedProfile(accountModel: account)
             case .failure(let error):
                 self?.output?.failureSendProfile(message: error.localizedDescription)
             }

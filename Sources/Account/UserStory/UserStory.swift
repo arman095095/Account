@@ -40,9 +40,10 @@ extension AccountUserStory: AccountRouteMap {
 extension AccountUserStory: RouteMapPrivate {
     func accountModule(context: InputFlowContext) -> AccountModule {
         let safeResolver = container.synchronize()
+        let profileManagerName = ProfileInfoManagersName(context: context).rawValue
         guard let alertManager = safeResolver.resolve(AlertManagerProtocol.self),
               let profileInfoManager = safeResolver.resolve(ProfileInfoManagerProtocol.self,
-                                                            name: context.managerName),
+                                                            name: profileManagerName),
               let profileValidator = safeResolver.resolve(ProfileValidatorProtocol.self) else {
             fatalError(ErrorMessage.dependency.localizedDescription)
         }

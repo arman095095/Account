@@ -69,7 +69,7 @@ extension AccountInteractor: AccountInteractorInput {
               let city = city,
               let birthday = birthday,
               let image = userImage else {
-            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
             return
         }
         
@@ -79,19 +79,19 @@ extension AccountInteractor: AccountInteractorInput {
                                         birthday: birthday,
                                         country: country,
                                         city: city) else {
-            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
             return
         }
         guard validator.validateSelectedAge(with: birthday) else {
-            output?.failureSendProfile(message: ProfileValidator.Error.ageNotValid.localizedDescription)
+            output?.failureSendProfile(message: ValidationError.Profile.ageNotValid.localizedDescription)
             return
         }
         guard validator.validateSelectedAgeNoLess16(date: birthday) else {
-            output?.failureSendProfile(message: ProfileValidator.Error.ageLess16.localizedDescription)
+            output?.failureSendProfile(message: ValidationError.Profile.ageLess16.localizedDescription)
             return
         }
         guard validator.validateSelectedImage(userImage: image) else {
-            output?.failureSendProfile(message: ProfileValidator.Error.photoNotAdded.localizedDescription)
+            output?.failureSendProfile(message: ValidationError.Profile.photoNotAdded.localizedDescription)
             return
         }
         output?.successValidated(username: username,

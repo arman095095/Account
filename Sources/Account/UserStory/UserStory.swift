@@ -31,9 +31,8 @@ extension AccountUserStory: AccountRouteMap {
     
     public func editAccountModule() -> AccountModule {
         let safeResolver = container.synchronize()
-        guard let accountManager = safeResolver.resolve(AccountManagerProtocol.self),
-              let accountProfile = accountManager.account?.profile else { fatalError(ErrorMessage.dependency.localizedDescription) }
-        return accountModule(context: .edit(dto: accountProfile))
+        guard let accountProfile = safeResolver.resolve(AccountModelProtocol.self) else { fatalError(ErrorMessage.dependency.localizedDescription) }
+        return accountModule(context: .edit(dto: accountProfile.profile))
     }
 }
 

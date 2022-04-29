@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/gtm-session-fetcher.git",
       "state" : {
-        "revision" : "eca9404a18f53727e4698211aaf2615eb93b962a",
-        "version" : "1.7.1"
+        "revision" : "4e9bbf2808b8fee444e84a48f5f3c12641987d3e",
+        "version" : "1.7.2"
       }
     },
     {
@@ -105,7 +105,7 @@
       "location" : "https://github.com/arman095095/Managers.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "67efcbc02eb71fec16c1e49bb369ea093e0c06b1"
+        "revision" : "fbf5359258c207c75ac3342e1bdb625b0bf30a6f"
       }
     },
     {
@@ -159,7 +159,7 @@
       "location" : "https://github.com/arman095095/Selection.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "8c2f7502e6efac4bdfb9e1dec1613f2d9b94cdc4"
+        "revision" : "a22f16e664421458f64c50dae628389f7c3086e4"
       }
     },
     {

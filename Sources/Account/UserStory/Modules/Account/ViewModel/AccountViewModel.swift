@@ -40,7 +40,7 @@ extension ProfileModel: AccountInfoViewModelProtocol {
     }
     
     public var countryCity: String {
-        "\(self.country),  \(self.city)"
+        "\(self.country), \(self.city)"
     }
     
     public var birthdayDate: Date {

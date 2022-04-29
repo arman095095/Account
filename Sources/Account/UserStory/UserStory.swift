@@ -39,10 +39,16 @@ extension AccountUserStory: AccountRouteMap {
 extension AccountUserStory: RouteMapPrivate {
     func accountModule(context: InputFlowContext) -> AccountModule {
         let safeResolver = container.synchronize()
-        let profileManagerName = ProfileInfoManagersName(context: context).rawValue
+        var profileManagerName: ProfileInfoManagersName
+        switch context {
+        case .edit:
+            profileManagerName = .account
+        case .create:
+            profileManagerName = .auth
+        }
         guard let alertManager = safeResolver.resolve(AlertManagerProtocol.self),
               let profileInfoManager = safeResolver.resolve(ProfileInfoManagerProtocol.self,
-                                                            name: profileManagerName),
+                                                            name: profileManagerName.rawValue),
               let profileValidator = safeResolver.resolve(ProfileValidatorProtocol.self) else {
             fatalError(ErrorMessage.dependency.localizedDescription)
         }

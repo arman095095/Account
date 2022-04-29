@@ -15,7 +15,7 @@
       "location" : "https://github.com/arman095095/AlertManager.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "13e9596e6068f19ef980d046dae92d9ba9480baf"
+        "revision" : "1617722582cfabd8c6784c62a9da3de0fc797fab"
       }
     },
     {
@@ -105,7 +105,7 @@
       "location" : "https://github.com/arman095095/Managers.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "fbf5359258c207c75ac3342e1bdb625b0bf30a6f"
+        "revision" : "9106ad597fe65b748d110d3530f270070d374ab5"
       }
     },
     {
@@ -159,7 +159,7 @@
       "location" : "https://github.com/arman095095/Selection.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "a22f16e664421458f64c50dae628389f7c3086e4"
+        "revision" : "d12fa0c7b6e3d84b55acdeab32bfb1be233f04a3"
       }
     },
     {
@@ -204,7 +204,7 @@
       "location" : "https://github.com/arman095095/Utils.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "aa710df99ecc073f48fa2463c674cab8a24cf441"
+        "revision" : "ff51de659ecf38fca40868ff3f6adc8a33f72901"
       }
     }
   ],

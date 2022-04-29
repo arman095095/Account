@@ -24,8 +24,9 @@ enum ProfileInfoManagersName: String {
     }
 }
 
-public final class AccountUserStoryAssembly {
-    public static func assemble(container: Container) {
+public final class AccountUserStoryAssembly: Assembly {
+    public init() { }
+    public func assemble(container: Container) {
         container.register(ProfileInfoManagerProtocol.self,
                            name: ProfileInfoManagersName.create.rawValue) { r in
             guard let profileInfoManager = r.resolve(AuthManagerProtocol.self) else { fatalError(ErrorMessage.dependency.localizedDescription)

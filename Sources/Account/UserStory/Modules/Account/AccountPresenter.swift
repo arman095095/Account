@@ -19,7 +19,7 @@ public protocol AccountDateFormatProtocol {
 extension DateFormatService: AccountDateFormatProtocol { }
 
 public protocol AccountModuleOutput: AnyObject {
-    func userSuccessAuthorized(userID: String, account: AccountModelProtocol)
+    func userSuccessAuthorized(account: AccountModelProtocol)
 }
 
 public protocol AccountModuleInput: AnyObject {
@@ -136,7 +136,7 @@ extension AccountPresenter: AccountInteractorOutput {
             router.dismissModule()
         case .create:
             alertManager.present(type: .success, title: stringFactory.successCreatedMessage)
-            output?.userSuccessAuthorized(userID: accountModel.profile.id, account: accountModel)
+            output?.userSuccessAuthorized(account: accountModel)
         }
     }
     

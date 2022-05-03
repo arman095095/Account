@@ -37,13 +37,7 @@ final class AccountViewController: UIViewController {
     private let sexSegment = UISegmentedControl(items: ["",""])
     private let sexLabel = UILabel()
     private let birthDatePicker = UIDatePicker()
-    private let enterButton = LoadButton(backgroundColor: .buttonDark(),
-                                         titleColor: .mainWhite(),
-                                         font: UIFont.avenir20(),
-                                         shadow: false,
-                                         cornerRaduis: 4,
-                                         height: Constants.largeButtonHeight,
-                                         activityColor: .white)
+    private let enterButton = ButtonsFactory.blackLoadButton
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,7 +156,7 @@ private extension AccountViewController {
         view.backgroundColor = .white
         contentView.backgroundColor = .white
         scrollView.backgroundColor = .white
-        enterButton.setTitle(stringFactory.createButtonTitle)
+        enterButton.setTitle(stringFactory.createButtonTitle, for: .normal)
         helloLabel.textAlignment = .center
         helloLabel.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.borderWidth = 1.3
@@ -186,7 +180,7 @@ private extension AccountViewController {
         view.backgroundColor = .white
         contentView.backgroundColor = .white
         scrollView.backgroundColor = .white
-        enterButton.setTitle(stringFactory.editButtonTitle)
+        enterButton.setTitle(stringFactory.editButtonTitle, for: .normal)
         helloLabel.textAlignment = .center
         helloLabel.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.borderWidth = 1.3

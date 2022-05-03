@@ -21,8 +21,7 @@ protocol AccountInteractorInput: AnyObject {
     func validateProfile(username: String?,
                          info: String?,
                          sex: String?,
-                         country: String?,
-                         city: String?,
+                         countryCity: String?,
                          birthday: String?,
                          userImage: UIImage?)
 }
@@ -58,21 +57,25 @@ extension AccountInteractor: AccountInteractorInput {
     func validateProfile(username: String?,
                          info: String?,
                          sex: String?,
-                         country: String?,
-                         city: String?,
+                         countryCity: String?,
                          birthday: String?,
                          userImage: UIImage?) {
         guard let username = username,
               let info = info,
               let sex = sex,
-              let country = country,
-              let city = city,
+              let countryCity = countryCity,
               let birthday = birthday,
               let image = userImage else {
             output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
             return
         }
-        
+        let countryCityComponents = countryCity.components(separatedBy: ", ")
+        guard countryCityComponents.count == 2 else {
+            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            return
+        }
+        let country = countryCityComponents[0]
+        let city = countryCityComponents[1]
         guard validator.checkFilledInfo(username: username,
                                         info: info,
                                         sex: sex,

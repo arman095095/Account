@@ -58,7 +58,6 @@ final class AccountViewController: UIViewController {
     }
     
     @objc private func enterTapped() {
-        enterButton.loading()
         output?.sendAccountInfo(userName: nameTextField.text,
                                 info: infoTextField.text,
                                 sex: sexSegment.titleForSegment(at: sexSegment.selectedSegmentIndex),

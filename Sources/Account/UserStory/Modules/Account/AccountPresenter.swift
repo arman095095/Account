@@ -101,14 +101,11 @@ extension AccountPresenter: AccountViewOutput {
                          userImage: UIImage?,
                          birthday: String?,
                          countryCity: String?) {
-        guard let countryCityComponents = countryCity?.components(separatedBy: ", "),
-              countryCityComponents.count == 2 else { return }
         view?.setLoading(on: true)
         interactor.validateProfile(username: userName,
                                    info: info,
                                    sex: sex,
-                                   country: countryCityComponents[0],
-                                   city: countryCityComponents[1],
+                                   countryCity: countryCity,
                                    birthday: birthday,
                                    userImage: userImage)
     }

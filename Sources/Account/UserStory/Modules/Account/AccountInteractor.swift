@@ -9,6 +9,7 @@
 import UIKit
 import Managers
 import Utils
+import ModelInterfaces
 
 protocol AccountInteractorInput: AnyObject {
     func sendAccount(username: String,

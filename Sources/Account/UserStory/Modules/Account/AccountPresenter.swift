@@ -9,22 +9,16 @@
 import UIKit
 import AlertManager
 import Selection
-import Managers
 import Utils
+import AccountRouteMap
+import SelectionRouteMap
+import ModelInterfaces
 
 public protocol AccountDateFormatProtocol {
     func getLocaleBirthdateText(date: Date) -> String
 }
 
 extension DateFormatService: AccountDateFormatProtocol { }
-
-public protocol AccountModuleOutput: AnyObject {
-    func userSuccessAuthorized(account: AccountModelProtocol)
-}
-
-public protocol AccountModuleInput: AnyObject {
-    
-}
 
 enum InputFlowContext {
     case edit(dto: ProfileModelProtocol)

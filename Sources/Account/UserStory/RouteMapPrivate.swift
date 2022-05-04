@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AccountRouteMap
 
 protocol RouteMapPrivate: AnyObject {
     func accountModule(context: InputFlowContext) -> AccountModule

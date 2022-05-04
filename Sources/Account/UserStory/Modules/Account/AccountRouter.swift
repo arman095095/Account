@@ -9,6 +9,7 @@
 import UIKit
 import Selection
 import Module
+import SelectionRouteMap
 
 protocol AccountRouterInput: AnyObject {
     func openRegionSelection(output: SelectionModuleOutput)

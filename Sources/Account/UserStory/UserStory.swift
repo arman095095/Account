@@ -11,11 +11,8 @@ import Managers
 import Swinject
 import AlertManager
 import Utils
-
-public protocol AccountRouteMap: AnyObject {
-    func createAccountModule() -> AccountModule
-    func editAccountModule() -> AccountModule
-}
+import AccountRouteMap
+import ModelInterfaces
 
 public final class AccountUserStory {
     private let container: Container

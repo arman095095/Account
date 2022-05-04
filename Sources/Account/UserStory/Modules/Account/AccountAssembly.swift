@@ -12,8 +12,7 @@ import Managers
 import Utils
 import AlertManager
 import Swinject
-
-public typealias AccountModule = Module<AccountModuleInput, AccountModuleOutput>
+import AccountRouteMap
 
 enum AccountAssembly {
     static func makeModule(alertManager: AlertManagerProtocol,

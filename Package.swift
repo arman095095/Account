@@ -31,14 +31,15 @@ let package = Package(
         .target(
             name: "Account",
             dependencies: [
-                           .product(name: "Managers", package: "Managers"),
-                           .product(name: "DesignSystem", package: "DesignSystem"),
-                           .product(name: "AlertManager", package: "AlertManager"),
-                           .product(name: "SelectionRouteMap", package: "SelectionRouteMap"),
-                           .product(name: "Utils", package: "Utils"),
-                           .product(name: "Swinject", package: "Swinject"),
-                           .product(name: "AccountRouteMap", package: "AccountRouteMap"),
-                           .product(name: "UserStoryFacade", package: "UserStoryFacade")]),
-        
+                .product(name: "Managers", package: "Managers"),
+                .product(name: "DesignSystem", package: "DesignSystem"),
+                .product(name: "AlertManager", package: "AlertManager"),
+                .product(name: "SelectionRouteMap", package: "SelectionRouteMap"),
+                .product(name: "Utils", package: "Utils"),
+                .product(name: "Swinject", package: "Swinject"),
+                .product(name: "AccountRouteMap", package: "AccountRouteMap"),
+                .product(name: "UserStoryFacade", package: "UserStoryFacade")],
+            resources: [.process("Resources")]
+        ),
     ]
 )

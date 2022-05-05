@@ -17,6 +17,7 @@ protocol AccountStringFactoryProtocol {
     var editButtonTitle: String { get }
     var imageDefaultName: String { get }
     var buttonImageDefaultName: String { get }
+    var imageExtensionType: String { get }
     var nameTitleText: String { get }
     var infoTitleText: String { get }
     var birthdayTitleText: String { get }
@@ -29,6 +30,7 @@ protocol AccountStringFactoryProtocol {
 struct AccountStringFactory: AccountStringFactoryProtocol {
     var imageDefaultName: String = "people"
     var buttonImageDefaultName: String = "add"
+    var imageExtensionType: String = "png"
     var nameTitleText: String = "Имя (видно всем)"
     var infoTitleText: String = "Информация о Вас"
     var birthdayTitleText: String = "Дата рождения"

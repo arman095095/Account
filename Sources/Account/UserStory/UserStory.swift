@@ -13,6 +13,8 @@ import AlertManager
 import Utils
 import AccountRouteMap
 import ModelInterfaces
+import SelectionRouteMap
+import UserStoryFacade
 
 public final class AccountUserStory {
     private let container: Container
@@ -34,6 +36,15 @@ extension AccountUserStory: AccountRouteMap {
 }
 
 extension AccountUserStory: RouteMapPrivate {
+
+    func regionSelectionModule() -> SelectionModule {
+        let safeResolver = container.synchronize()
+        guard let module = safeResolver.resolve(UserStoryFacadeProtocol.self)?.regionUserStory?.countryAndCityModule() else {
+            fatalError(ErrorMessage.dependency.localizedDescription)
+        }
+        return module
+    }
+    
     func accountModule(context: InputFlowContext) -> AccountModule {
         let safeResolver = container.synchronize()
         var profileManagerName: ProfileInfoManagersName
@@ -52,7 +63,8 @@ extension AccountUserStory: RouteMapPrivate {
         let module = AccountAssembly.makeModule(alertManager: alertManager,
                                                 profileInfoManager: profileInfoManager,
                                                 profileValidator: profileValidator,
-                                                context: context)
+                                                context: context,
+                                                routeMap: self)
         return module
     }
 }

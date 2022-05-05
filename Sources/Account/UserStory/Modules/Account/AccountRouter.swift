@@ -19,6 +19,11 @@ protocol AccountRouterInput: AnyObject {
 
 final class AccountRouter {
     weak var transitionHandler: UIViewController?
+    private let routeMap: RouteMapPrivate
+    
+    init(routeMap: RouteMapPrivate) {
+        self.routeMap = routeMap
+    }
 }
 
 extension AccountRouter: AccountRouterInput {
@@ -33,7 +38,7 @@ extension AccountRouter: AccountRouterInput {
     }
     
     func openRegionSelection(output: SelectionModuleOutput) {
-        let module = RegionUserStory().countryAndCityModule()
+        let module = routeMap.regionSelectionModule()
         module.output = output
         self.push(module.view)
     }

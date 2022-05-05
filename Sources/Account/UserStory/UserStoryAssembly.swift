@@ -9,10 +9,14 @@ import Foundation
 import Swinject
 import Utils
 import Managers
+import AccountRouteMap
+import UserStoryFacade
 
 public final class AccountUserStoryAssembly: Assembly {
     public init() { }
     public func assemble(container: Container) {
-        
+        container.register(AccountRouteMap.self) { r in
+            AccountUserStory(container: container)
+        }
     }
 }

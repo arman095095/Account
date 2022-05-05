@@ -139,8 +139,8 @@ private extension AccountViewController {
     
     func setupViewsForCreate(stringFactory: AccountStringFactoryProtocol) {
         helloLabel.font = UIFont.avenir26()
-        imageView.image = UIImage(named: stringFactory.imageDefaultName)
-        imageButton.setImage(UIImage(named: stringFactory.buttonImageDefaultName), for: .normal)
+        imageView.image = UIImage(named: stringFactory.imageDefaultName, in: Bundle.module, compatibleWith: nil)
+        imageButton.setImage(UIImage(named: stringFactory.buttonImageDefaultName, in: Bundle.module, compatibleWith: nil), for: .normal)
         nameLabel.text = stringFactory.nameTitleText
         infoLabel.text = stringFactory.infoTitleText
         birthDayLabel.text = stringFactory.birthdayTitleText

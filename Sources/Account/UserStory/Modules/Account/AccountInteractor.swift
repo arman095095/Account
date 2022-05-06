@@ -18,13 +18,19 @@ protocol AccountInteractorInput: AnyObject {
                      country: String,
                      city: String,
                      birthday: String,
-                     userImage: UIImage)
-    func validateProfile(username: String?,
-                         info: String?,
-                         sex: String?,
-                         countryCity: String?,
-                         birthday: String?,
-                         userImage: UIImage?)
+                     userImage: UIImage?)
+    func validateProfileCreate(username: String?,
+                               info: String?,
+                               sex: String?,
+                               countryCity: String?,
+                               birthday: String?,
+                               userImage: UIImage?)
+    func validateProfileEdit(username: String?,
+                             info: String?,
+                             sex: String?,
+                             countryCity: String?,
+                             birthday: String?,
+                             userImage: UIImage?)
 }
 
 protocol AccountInteractorOutput: AnyObject {
@@ -37,7 +43,7 @@ protocol AccountInteractorOutput: AnyObject {
                           country: String,
                           city: String,
                           birthday: String,
-                          userImage: UIImage)
+                          userImage: UIImage?)
 }
 
 final class AccountInteractor {
@@ -55,12 +61,12 @@ final class AccountInteractor {
 
 extension AccountInteractor: AccountInteractorInput {
     
-    func validateProfile(username: String?,
-                         info: String?,
-                         sex: String?,
-                         countryCity: String?,
-                         birthday: String?,
-                         userImage: UIImage?) {
+    func validateProfileCreate(username: String?,
+                               info: String?,
+                               sex: String?,
+                               countryCity: String?,
+                               birthday: String?,
+                               userImage: UIImage?) {
         guard let username = username,
               let info = info,
               let sex = sex,
@@ -107,14 +113,61 @@ extension AccountInteractor: AccountInteractorInput {
                                  userImage: image)
     }
     
+    func validateProfileEdit(username: String?,
+                             info: String?,
+                             sex: String?,
+                             countryCity: String?,
+                             birthday: String?,
+                             userImage: UIImage?) {
+        guard let username = username,
+              let info = info,
+              let sex = sex,
+              let countryCity = countryCity,
+              let birthday = birthday else {
+            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            return
+        }
+        let countryCityComponents = countryCity.components(separatedBy: ", ")
+        guard countryCityComponents.count == 2 else {
+            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            return
+        }
+        let country = countryCityComponents[0]
+        let city = countryCityComponents[1]
+        guard validator.checkFilledInfo(username: username,
+                                        info: info,
+                                        sex: sex,
+                                        birthday: birthday,
+                                        country: country,
+                                        city: city) else {
+            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            return
+        }
+        guard validator.validateSelectedAge(with: birthday) else {
+            output?.failureSendProfile(message: ValidationError.Profile.ageNotValid.localizedDescription)
+            return
+        }
+        guard validator.validateSelectedAgeNoLess16(date: birthday) else {
+            output?.failureSendProfile(message: ValidationError.Profile.ageLess16.localizedDescription)
+            return
+        }
+        output?.successValidated(username: username,
+                                 info: info,
+                                 sex: sex,
+                                 country: country,
+                                 city: city,
+                                 birthday: birthday,
+                                 userImage: userImage)
+    }
+    
     func sendAccount(username: String,
                      info: String,
                      sex: String,
                      country: String,
                      city: String,
                      birthday: String,
-                     userImage: UIImage) {
-        guard let imageData = userImage.jpegData(compressionQuality: 0.4) else { return }
+                     userImage: UIImage?) {
+        let imageData = userImage?.jpegData(compressionQuality: 0.4)
         profileInfoManager.sendProfile(username: username,
                                        info: info,
                                        sex: sex,

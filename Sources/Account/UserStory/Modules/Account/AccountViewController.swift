@@ -61,7 +61,6 @@ final class AccountViewController: UIViewController {
         output?.sendAccountInfo(userName: nameTextField.text,
                                 info: infoTextField.text,
                                 sex: sexSegment.titleForSegment(at: sexSegment.selectedSegmentIndex),
-                                userImage: imageView.image,
                                 birthday: birthDayTextfField.text,
                                 countryCity: countryCityTextfField.text)
     }
@@ -265,7 +264,9 @@ private extension AccountViewController {
 
 extension AccountViewController {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imageView.image = info[.editedImage] as? UIImage
+        guard let image = info[.editedImage] as? UIImage else { return }
+        imageView.image = image
+        output?.select(image: image)
         picker.dismiss(animated: true, completion: nil)
     }
 }

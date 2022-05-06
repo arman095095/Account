@@ -39,11 +39,11 @@ protocol AccountViewOutput: AnyObject {
     func sendAccountInfo(userName: String?,
                          info: String?,
                          sex: String?,
-                         userImage: UIImage?,
                          birthday: String?,
                          countryCity: String?)
     func countryCitySelection()
     func birthdateText(value: Date) -> String
+    func select(image: UIImage)
 }
 
 final class AccountPresenter {
@@ -56,6 +56,7 @@ final class AccountPresenter {
     private let context: InputFlowContext
     private let alertManager: AlertManagerProtocol
     private let dateFormatter: AccountDateFormatProtocol
+    private var selectedImage: UIImage?
     
     init(router: AccountRouterInput,
          interactor: AccountInteractorInput,
@@ -92,20 +93,33 @@ extension AccountPresenter: AccountViewOutput {
     func sendAccountInfo(userName: String?,
                          info: String?,
                          sex: String?,
-                         userImage: UIImage?,
                          birthday: String?,
                          countryCity: String?) {
         view?.setLoading(on: true)
-        interactor.validateProfile(username: userName,
-                                   info: info,
-                                   sex: sex,
-                                   countryCity: countryCity,
-                                   birthday: birthday,
-                                   userImage: userImage)
+        switch context {
+        case .edit:
+            interactor.validateProfileEdit(username: userName,
+                                           info: info,
+                                           sex: sex,
+                                           countryCity: countryCity,
+                                           birthday: birthday,
+                                           userImage: self.selectedImage)
+        case .create:
+            interactor.validateProfileCreate(username: userName,
+                                             info: info,
+                                             sex: sex,
+                                             countryCity: countryCity,
+                                             birthday: birthday,
+                                             userImage: self.selectedImage)
+        }
     }
     
     func birthdateText(value: Date) -> String {
         dateFormatter.getLocaleBirthdateText(date: value)
+    }
+    
+    func select(image: UIImage) {
+        self.selectedImage = image
     }
 }
 
@@ -119,6 +133,7 @@ extension AccountPresenter: SelectionModuleOutput {
 }
 
 extension AccountPresenter: AccountInteractorOutput {
+    
     func successSendedProfile(accountModel: AccountModelProtocol) {
         view?.setLoading(on: false)
         switch context {
@@ -142,7 +157,7 @@ extension AccountPresenter: AccountInteractorOutput {
                           country: String,
                           city: String,
                           birthday: String,
-                          userImage: UIImage) {
+                          userImage: UIImage?) {
         interactor.sendAccount(username: username,
                                info: info,
                                sex: sex,

@@ -60,7 +60,7 @@
       "location" : "https://github.com/arman095095/DesignSystem.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "687d7c82e83da24c308e35244fb50637d5539217"
+        "revision" : "ca7b5849ce5deb8eecee1a27c69148580f3396fb"
       }
     },
     {
@@ -199,15 +199,6 @@
       }
     },
     {
-      "identity" : "sdwebimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImage.git",
-      "state" : {
-        "revision" : "2e63d0061da449ad0ed130768d05dceb1496de44",
-        "version" : "5.12.5"
-      }
-    },
-    {
       "identity" : "selectionroutemap",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/arman095095/SelectionRouteMap.git",
@@ -276,7 +267,7 @@
       "location" : "https://github.com/arman095095/Utils.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "611eb753336c8440f054a949b34df285c73a49be"
+        "revision" : "a35a998963d8bda712c434ffdbb5a7e573300d5e"
       }
     }
   ],

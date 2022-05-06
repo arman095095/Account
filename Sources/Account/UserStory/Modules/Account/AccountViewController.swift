@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SDWebImage
 import DesignSystem
 import AlertManager
 
@@ -24,7 +23,7 @@ final class AccountViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let helloLabel = UILabel()
-    private let imageView = UIImageView()
+    private let imageView = ImageView()
     private let imageButton = UIButton()
     private let nameTextField = UITextField()
     private let nameLabel = UILabel()
@@ -96,7 +95,7 @@ extension AccountViewController: AccountViewInput {
         birthDayTextfField.text = info.birthday
         birthDatePicker.date = info.birthdayDate
         sexSegment.selectedSegmentIndex = info.sexIndex
-        imageView.sd_setImage(with: info.photoURL)
+        imageView.set(imageURL: info.photoURL)
     }
     
     func setupRegion(info: String) {

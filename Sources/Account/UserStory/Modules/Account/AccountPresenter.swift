@@ -140,9 +140,10 @@ extension AccountPresenter: AccountInteractorOutput {
         case .edit:
             alertManager.present(type: .success, title: stringFactory.successEditedMessage)
             router.dismissModule()
+            output?.userSuccessEdited()
         case .create:
             alertManager.present(type: .success, title: stringFactory.successCreatedMessage)
-            output?.userSuccessAuthorized(account: accountModel)
+            output?.userSuccessCreated(account: accountModel)
         }
     }
     

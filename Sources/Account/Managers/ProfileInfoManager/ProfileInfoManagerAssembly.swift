@@ -12,17 +12,22 @@ import ModelInterfaces
 import Managers
 import Services
 
-public enum ProfileInfoManagersName: String {
+enum ProfileInfoManagersName: String {
     case auth
     case account
 }
 
-public final class ProfileInfoManagerAssembly: Assembly {
-    public func assemble(container: Container) {
+final class ProfileInfoManagerAssembly: Assembly {
+
+    enum Names: String {
+        case accountID
+    }
+
+    func assemble(container: Container) {
         
         container.register(ProfileInfoManagerProtocol.self,
                            name: ProfileInfoManagersName.auth.rawValue) { r in
-            guard let accountID = r.resolve(String.self, name: "accountID"),
+            guard let accountID = r.resolve(String.self, name: Names.accountID.rawValue),
                   let remoteStorageService = r.resolve(RemoteStorageServiceProtocol.self),
                   let accountService = r.resolve(AccountServiceProtocol.self),
                   let quickAccessManager = r.resolve(QuickAccessManagerProtocol.self) else {

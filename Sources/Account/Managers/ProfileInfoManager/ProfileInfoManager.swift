@@ -11,7 +11,7 @@ import NetworkServices
 import Services
 import Managers
 
-public protocol ProfileInfoManagerProtocol: AnyObject {
+protocol ProfileInfoManagerProtocol: AnyObject {
     func sendProfile(username: String,
                      info: String,
                      sex: String,
@@ -22,18 +22,18 @@ public protocol ProfileInfoManagerProtocol: AnyObject {
                      completion: @escaping (Result<AccountModelProtocol, Error>) -> Void)
 }
 
-public final class ProfileInfoEditManager {
+final class ProfileInfoEditManager {
     private let accountID: String
     private let account: AccountModelProtocol
     private let remoteStorageService: RemoteStorageServiceProtocol
     private let accountService: AccountServiceProtocol
     private let cacheService: AccountCacheServiceProtocol
     
-    public init(accountID: String,
-                account: AccountModelProtocol,
-                remoteStorageService: RemoteStorageServiceProtocol,
-                accountService: AccountServiceProtocol,
-                cacheService: AccountCacheServiceProtocol) {
+    init(accountID: String,
+         account: AccountModelProtocol,
+         remoteStorageService: RemoteStorageServiceProtocol,
+         accountService: AccountServiceProtocol,
+         cacheService: AccountCacheServiceProtocol) {
         self.accountID = accountID
         self.account = account
         self.remoteStorageService = remoteStorageService
@@ -43,14 +43,14 @@ public final class ProfileInfoEditManager {
 }
 
 extension ProfileInfoEditManager: ProfileInfoManagerProtocol {
-    public func sendProfile(username: String,
-                            info: String,
-                            sex: String,
-                            country: String,
-                            city: String,
-                            birthday: String,
-                            image: Data?,
-                            completion: @escaping (Result<AccountModelProtocol, Error>) -> Void) {
+    func sendProfile(username: String,
+                     info: String,
+                     sex: String,
+                     country: String,
+                     city: String,
+                     birthday: String,
+                     image: Data?,
+                     completion: @escaping (Result<AccountModelProtocol, Error>) -> Void) {
         guard let image = image else {
             let imageURL = account.profile.imageUrl
             let edited = ProfileNetworkModel(userName: username,
@@ -103,16 +103,16 @@ private extension ProfileInfoEditManager {
     }
 }
 
-public final class ProfileInfoCreateManager {
+final class ProfileInfoCreateManager {
     private let accountID: String
     private let remoteStorageService: RemoteStorageServiceProtocol
     private let accountService: AccountServiceProtocol
     private let quickAccessManager: QuickAccessManagerProtocol
     
-    public init(accountID: String,
-                remoteStorageService: RemoteStorageServiceProtocol,
-                accountService: AccountServiceProtocol,
-                quickAccessManager: QuickAccessManagerProtocol) {
+    init(accountID: String,
+         remoteStorageService: RemoteStorageServiceProtocol,
+         accountService: AccountServiceProtocol,
+         quickAccessManager: QuickAccessManagerProtocol) {
         self.accountID = accountID
         self.remoteStorageService = remoteStorageService
         self.accountService = accountService
@@ -121,27 +121,27 @@ public final class ProfileInfoCreateManager {
 }
 
 extension ProfileInfoCreateManager: ProfileInfoManagerProtocol {
-    public func sendProfile(username: String,
-                            info: String,
-                            sex: String,
-                            country: String,
-                            city: String,
-                            birthday: String,
-                            image: Data?,
-                            completion: @escaping (Result<AccountModelProtocol, Error>) -> Void) {
+    func sendProfile(username: String,
+                     info: String,
+                     sex: String,
+                     country: String,
+                     city: String,
+                     birthday: String,
+                     image: Data?,
+                     completion: @escaping (Result<AccountModelProtocol, Error>) -> Void) {
         guard let image = image else { return }
         remoteStorageService.uploadProfile(accountID: accountID, image: image) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let url):
                 let profileModel = ProfileNetworkModel(userName: username,
-                                                imageName: url.absoluteString,
-                                                identifier: self.accountID,
-                                                sex: sex,
-                                                info: info,
-                                                birthDay: birthday,
-                                                country: country,
-                                                city: city)
+                                                       imageName: url.absoluteString,
+                                                       identifier: self.accountID,
+                                                       sex: sex,
+                                                       info: info,
+                                                       birthDay: birthday,
+                                                       country: country,
+                                                       city: city)
                 self.accountService.createAccount(accountID: self.accountID,
                                                   profile: profileModel) { [weak self] result in
                     guard let self = self else { return }

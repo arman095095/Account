@@ -24,6 +24,7 @@ public final class AccountUserStory {
 }
 
 extension AccountUserStory: AccountRouteMap {
+
     public func createAccountModule() -> AccountModule {
         return accountModule(context: .create)
     }

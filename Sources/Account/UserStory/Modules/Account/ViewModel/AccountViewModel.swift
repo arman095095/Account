@@ -9,7 +9,7 @@ import UIKit
 import Services
 import Utils
 
-public protocol AccountInfoViewModelProtocol {
+protocol AccountInfoViewModelProtocol {
     var displayName: String { get }
     var info: String { get }
     var countryCity: String { get }
@@ -35,23 +35,23 @@ extension ProfileModel: AccountInfoViewModelProtocol {
         }
     }
     
-    public var displayName: String {
+    var displayName: String {
         self.userName
     }
     
-    public var countryCity: String {
+    var countryCity: String {
         "\(self.country), \(self.city)"
     }
     
-    public var birthdayDate: Date {
+    var birthdayDate: Date {
         DateFormatService().getBirthdate(from: birthday)
     }
     
-    public var sexIndex: Int {
+    var sexIndex: Int {
         Sex(rawValue: self.sex)?.index ?? 0
     }
     
-    public var photoURL: URL? {
+    var photoURL: URL? {
         URL(string: self.imageUrl)
     }
 }

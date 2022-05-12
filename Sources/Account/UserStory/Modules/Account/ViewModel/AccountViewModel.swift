@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Managers
+import Services
 import Utils
 
 public protocol AccountInfoViewModelProtocol {

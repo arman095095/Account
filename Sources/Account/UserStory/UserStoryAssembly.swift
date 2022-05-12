@@ -15,6 +15,7 @@ import UserStoryFacade
 public final class AccountUserStoryAssembly: Assembly {
     public init() { }
     public func assemble(container: Container) {
+        ProfileInfoManagerAssembly().assemble(container: container)
         container.register(AccountRouteMap.self) { r in
             AccountUserStory(container: container)
         }

@@ -28,7 +28,7 @@ final class ProfileInfoManagerAssembly: Assembly {
         container.register(ProfileInfoManagerProtocol.self,
                            name: ProfileInfoManagersName.auth.rawValue) { r in
             guard let accountID = r.resolve(String.self, name: Names.accountID.rawValue),
-                  let remoteStorageService = r.resolve(RemoteStorageServiceProtocol.self),
+                  let remoteStorageService = r.resolve(ProfileRemoteStorageServiceProtocol.self),
                   let accountService = r.resolve(AccountServiceProtocol.self),
                   let quickAccessManager = r.resolve(QuickAccessManagerProtocol.self) else {
                 fatalError(ErrorMessage.dependency.localizedDescription)
@@ -41,7 +41,7 @@ final class ProfileInfoManagerAssembly: Assembly {
         
         container.register(ProfileInfoManagerProtocol.self, name: ProfileInfoManagersName.account.rawValue) { r in
             guard let account = r.resolve(AccountModelProtocol.self),
-                  let remoteStorageService = r.resolve(RemoteStorageServiceProtocol.self),
+                  let remoteStorageService = r.resolve(ProfileRemoteStorageServiceProtocol.self),
                   let accountService = r.resolve(AccountServiceProtocol.self),
                   let accountID = r.resolve(QuickAccessManagerProtocol.self)?.userID,
                   let cacheService = r.resolve(AccountCacheServiceProtocol.self) else {

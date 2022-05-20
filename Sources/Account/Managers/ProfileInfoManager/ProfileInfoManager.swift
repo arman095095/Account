@@ -25,13 +25,13 @@ protocol ProfileInfoManagerProtocol: AnyObject {
 final class ProfileInfoEditManager {
     private let accountID: String
     private let account: AccountModelProtocol
-    private let remoteStorageService: RemoteStorageServiceProtocol
+    private let remoteStorageService: ProfileRemoteStorageServiceProtocol
     private let accountService: AccountServiceProtocol
     private let cacheService: AccountCacheServiceProtocol
     
     init(accountID: String,
          account: AccountModelProtocol,
-         remoteStorageService: RemoteStorageServiceProtocol,
+         remoteStorageService: ProfileRemoteStorageServiceProtocol,
          accountService: AccountServiceProtocol,
          cacheService: AccountCacheServiceProtocol) {
         self.accountID = accountID
@@ -105,12 +105,12 @@ private extension ProfileInfoEditManager {
 
 final class ProfileInfoCreateManager {
     private let accountID: String
-    private let remoteStorageService: RemoteStorageServiceProtocol
+    private let remoteStorageService: ProfileRemoteStorageServiceProtocol
     private let accountService: AccountServiceProtocol
     private let quickAccessManager: QuickAccessManagerProtocol
     
     init(accountID: String,
-         remoteStorageService: RemoteStorageServiceProtocol,
+         remoteStorageService: ProfileRemoteStorageServiceProtocol,
          accountService: AccountServiceProtocol,
          quickAccessManager: QuickAccessManagerProtocol) {
         self.accountID = accountID

@@ -40,7 +40,7 @@ extension AccountUserStory: RouteMapPrivate {
 
     func regionSelectionModule() -> SelectionModule {
         let safeResolver = container.synchronize()
-        guard let module = safeResolver.resolve(UserStoryFacadeProtocol.self)?.regionUserStory?.countryAndCityModule() else {
+        guard let module = safeResolver.resolve(UserStoryFacadeProtocol.self)?.regionSelection?.countryAndCityModule() else {
             fatalError(ErrorMessage.dependency.localizedDescription)
         }
         return module

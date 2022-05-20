@@ -72,16 +72,16 @@ extension AccountInteractor: AccountInteractorInput {
               let sex = sex,
               let countryCity = countryCity,
               let birthday = birthday else {
-            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
             return
         }
         guard let image = userImage else {
-            output?.failureSendProfile(message: ValidationError.Profile.photoNotAdded.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.photoNotAdded.localizedDescription)
             return
         }
         let countryCityComponents = countryCity.components(separatedBy: ", ")
         guard countryCityComponents.count == 2 else {
-            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
             return
         }
         let country = countryCityComponents[0]
@@ -92,15 +92,15 @@ extension AccountInteractor: AccountInteractorInput {
                                         birthday: birthday,
                                         country: country,
                                         city: city) else {
-            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
             return
         }
         guard validator.validateSelectedAge(with: birthday) else {
-            output?.failureSendProfile(message: ValidationError.Profile.ageNotValid.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.ageNotValid.localizedDescription)
             return
         }
         guard validator.validateSelectedAgeNoLess16(date: birthday) else {
-            output?.failureSendProfile(message: ValidationError.Profile.ageLess16.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.ageLess16.localizedDescription)
             return
         }
         output?.successValidated(username: username,
@@ -123,12 +123,12 @@ extension AccountInteractor: AccountInteractorInput {
               let sex = sex,
               let countryCity = countryCity,
               let birthday = birthday else {
-            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
             return
         }
         let countryCityComponents = countryCity.components(separatedBy: ", ")
         guard countryCityComponents.count == 2 else {
-            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
             return
         }
         let country = countryCityComponents[0]
@@ -139,15 +139,15 @@ extension AccountInteractor: AccountInteractorInput {
                                         birthday: birthday,
                                         country: country,
                                         city: city) else {
-            output?.failureSendProfile(message: ValidationError.Profile.notFilled.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.notFilled.localizedDescription)
             return
         }
         guard validator.validateSelectedAge(with: birthday) else {
-            output?.failureSendProfile(message: ValidationError.Profile.ageNotValid.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.ageNotValid.localizedDescription)
             return
         }
         guard validator.validateSelectedAgeNoLess16(date: birthday) else {
-            output?.failureSendProfile(message: ValidationError.Profile.ageLess16.localizedDescription)
+            output?.failureSendProfile(message: ProfileValidator.Error.ageLess16.localizedDescription)
             return
         }
         output?.successValidated(username: username,

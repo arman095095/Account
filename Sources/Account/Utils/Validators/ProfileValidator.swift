@@ -20,6 +20,27 @@ public protocol ProfileValidatorProtocol {
 }
 
 struct ProfileValidator: ProfileValidatorProtocol {
+    
+    enum Error: LocalizedError {
+        case notFilled
+        case photoNotAdded
+        case ageLess16
+        case ageNotValid
+        
+        public var errorDescription: String? {
+            switch self {
+            case .notFilled:
+                return NSLocalizedString("Заполните все поля", comment: "")
+            case .photoNotAdded:
+                return NSLocalizedString("Вы не добавили фото", comment: "")
+            case .ageLess16:
+                return NSLocalizedString("Вам нет 16-ти лет", comment: "")
+            case .ageNotValid:
+                return NSLocalizedString("Пожалуйста, введите корректную дату рождения", comment: "")
+            }
+        }
+    }
+    
     public func validateSelectedAgeNoLess16(date: String) -> Bool {
         guard let age = Int(DateFormatService().getAge(date: date)) else { return false }
         return !(age < 16)

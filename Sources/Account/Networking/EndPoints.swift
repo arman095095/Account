@@ -18,6 +18,23 @@ struct StorageURLComponents {
     }
 }
 
+enum URLComponents {
+    enum Paths: String {
+        case users
+        case blocked
+        case sendedRequests
+        case friendIDs
+        case waitingUsers
+    }
+    
+    enum Parameters: String {
+        case id
+        case online
+        case lastActivity
+        case removed
+    }
+}
+
 struct ProfileURLComponents {
 
     enum Paths: String {

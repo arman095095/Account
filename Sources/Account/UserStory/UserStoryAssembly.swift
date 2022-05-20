@@ -15,6 +15,7 @@ import UserStoryFacade
 public final class AccountUserStoryAssembly: Assembly {
     public init() { }
     public func assemble(container: Container) {
+        AccountNetworkServiceAssembly().assemble(container: container)
         ProfileRemoteStorageServiceAssembly().assemble(container: container)
         ProfileInfoManagerAssembly().assemble(container: container)
         container.register(AccountRouteMap.self) { r in

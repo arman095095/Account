@@ -17,11 +17,11 @@ import AccountRouteMap
 enum AccountAssembly {
     static func makeModule(alertManager: AlertManagerProtocol,
                            profileInfoManager: ProfileInfoManagerProtocol,
-                           profileValidator: ProfileValidatorProtocol,
                            context: InputFlowContext,
                            routeMap: RouteMapPrivate) -> AccountModule {
         let view = AccountViewController()
         let router = AccountRouter(routeMap: routeMap)
+        let profileValidator = ProfileValidator()
         let interactor = AccountInteractor(profileInfoManager: profileInfoManager,
                                            validator: profileValidator)
         let stringFactory = AccountStringFactory()

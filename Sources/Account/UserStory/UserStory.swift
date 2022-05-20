@@ -57,13 +57,11 @@ extension AccountUserStory: RouteMapPrivate {
         }
         guard let alertManager = safeResolver.resolve(AlertManagerProtocol.self),
               let profileInfoManager = safeResolver.resolve(ProfileInfoManagerProtocol.self,
-                                                            name: profileManagerName.rawValue),
-              let profileValidator = safeResolver.resolve(ProfileValidatorProtocol.self) else {
+                                                            name: profileManagerName.rawValue) else {
             fatalError(ErrorMessage.dependency.localizedDescription)
         }
         let module = AccountAssembly.makeModule(alertManager: alertManager,
                                                 profileInfoManager: profileInfoManager,
-                                                profileValidator: profileValidator,
                                                 context: context,
                                                 routeMap: self)
         return module

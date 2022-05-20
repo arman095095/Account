@@ -26,13 +26,13 @@ final class ProfileInfoEditManager {
     private let accountID: String
     private let account: AccountModelProtocol
     private let remoteStorageService: ProfileRemoteStorageServiceProtocol
-    private let accountService: AccountServiceProtocol
+    private let accountService: AccountNetworkServiceProtocol
     private let cacheService: AccountCacheServiceProtocol
     
     init(accountID: String,
          account: AccountModelProtocol,
          remoteStorageService: ProfileRemoteStorageServiceProtocol,
-         accountService: AccountServiceProtocol,
+         accountService: AccountNetworkServiceProtocol,
          cacheService: AccountCacheServiceProtocol) {
         self.accountID = accountID
         self.account = account
@@ -106,12 +106,12 @@ private extension ProfileInfoEditManager {
 final class ProfileInfoCreateManager {
     private let accountID: String
     private let remoteStorageService: ProfileRemoteStorageServiceProtocol
-    private let accountService: AccountServiceProtocol
+    private let accountService: AccountNetworkServiceProtocol
     private let quickAccessManager: QuickAccessManagerProtocol
     
     init(accountID: String,
          remoteStorageService: ProfileRemoteStorageServiceProtocol,
-         accountService: AccountServiceProtocol,
+         accountService: AccountNetworkServiceProtocol,
          quickAccessManager: QuickAccessManagerProtocol) {
         self.accountID = accountID
         self.remoteStorageService = remoteStorageService

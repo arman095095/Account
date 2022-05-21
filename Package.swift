@@ -13,7 +13,8 @@ private let dependencies: [Package.Dependency] = [
     .package(url: "https://github.com/arman095095/SelectionRouteMap.git", branch: "develop"),
     .package(url: "https://github.com/arman095095/Utils.git", branch: "develop"),
     .package(url: "https://github.com/arman095095/AccountRouteMap.git", branch: "develop"),
-    .package(url: "https://github.com/arman095095/UserStoryFacade.git", branch: "develop")
+    .package(url: "https://github.com/arman095095/UserStoryFacade.git", branch: "develop"),
+    .package(url: "https://github.com/arman095095/NetworkServices.git", branch: "develop"),
 ]
 
 let package = Package(
@@ -40,7 +41,8 @@ let package = Package(
                 .product(name: "Swinject", package: "Swinject"),
                 .product(name: "AccountRouteMap", package: "AccountRouteMap"),
                 .product(name: "UserStoryFacade", package: "UserStoryFacade"),
-                .product(name: "Services", package: "Services")],
+                .product(name: "Services", package: "Services"),
+                .product(name: "NetworkServices",package: "NetworkServices")],
             resources: [.process("Resources")]
         ),
     ]

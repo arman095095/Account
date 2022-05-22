@@ -79,8 +79,8 @@ extension AccountPresenter: AccountViewOutput {
         switch context {
         case .edit(let info):
             view?.setupInitialStateForEdit(stringFactory: stringFactory)
-            guard let profile = info as? AccountInfoViewModelProtocol else { return }
-            view?.setupFilledFields(info: profile)
+            let viewModel = AccountInfoViewModel(profile: info)
+            view?.setupFilledFields(info: viewModel)
         case .create:
             view?.setupInitialStateForCreate(stringFactory: stringFactory)
         }

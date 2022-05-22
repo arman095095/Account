@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import Services
 import Utils
+import ModelInterfaces
 
 protocol AccountInfoViewModelProtocol {
     var displayName: String { get }
@@ -19,7 +19,7 @@ protocol AccountInfoViewModelProtocol {
     var photoURL: URL? { get }
 }
 
-extension ProfileModel: AccountInfoViewModelProtocol {
+final class AccountInfoViewModel: AccountInfoViewModelProtocol {
     
     enum Sex: String {
         case male = "Мужчина"
@@ -34,24 +34,22 @@ extension ProfileModel: AccountInfoViewModelProtocol {
             }
         }
     }
+
+    var displayName: String
+    var info: String
+    var countryCity: String
+    var birthday: String
+    var birthdayDate: Date
+    var sexIndex: Int
+    var photoURL: URL?
     
-    var displayName: String {
-        self.userName
-    }
-    
-    var countryCity: String {
-        "\(self.country), \(self.city)"
-    }
-    
-    var birthdayDate: Date {
-        DateFormatService().getBirthdate(from: birthday)
-    }
-    
-    var sexIndex: Int {
-        Sex(rawValue: self.sex)?.index ?? 0
-    }
-    
-    var photoURL: URL? {
-        URL(string: self.imageUrl)
+    init(profile: ProfileModelProtocol) {
+        self.displayName = profile.userName
+        self.countryCity = "\(profile.country), \(profile.city)"
+        self.birthdayDate = DateFormatService().getBirthdate(from: profile.birthday)
+        self.sexIndex = Sex(rawValue: profile.sex)?.index ?? 0
+        self.photoURL = URL(string: profile.imageUrl)
+        self.birthday = profile.birthday
+        self.info = profile.info
     }
 }

@@ -18,7 +18,8 @@ public final class AccountUserStoryAssembly: Assembly {
         AccountCacheServiceAssembly().assemble(container: container)
         AccountNetworkServiceAssembly().assemble(container: container)
         ProfileRemoteStorageServiceAssembly().assemble(container: container)
-        ProfileInfoManagerAssembly().assemble(container: container)
+        ProfileCreateInfoManagerAssembly().assemble(container: container)
+        ProfileEditInfoManagerAssembly().assemble(container: container)
         container.register(AccountRouteMap.self) { r in
             AccountUserStory(container: container)
         }

@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  File 3.swift
 //  
 //
-//  Created by Арман Чархчян on 12.05.2022.
+//  Created by Арман Чархчян on 26.05.2022.
 //
 
 import Foundation
@@ -12,32 +12,9 @@ import ModelInterfaces
 import Managers
 import Services
 
-enum ProfileInfoManagersName: String {
-    case auth
-    case account
-}
-
-final class ProfileInfoManagerAssembly: Assembly {
-
-    enum Names: String {
-        case accountID
-    }
+final class ProfileEditInfoManagerAssembly: Assembly {
 
     func assemble(container: Container) {
-        
-        container.register(ProfileInfoManagerProtocol.self,
-                           name: ProfileInfoManagersName.auth.rawValue) { r in
-            guard let accountID = r.resolve(String.self, name: Names.accountID.rawValue),
-                  let remoteStorageService = r.resolve(ProfileRemoteStorageServiceProtocol.self),
-                  let accountService = r.resolve(AccountNetworkServiceProtocol.self),
-                  let quickAccessManager = r.resolve(QuickAccessManagerProtocol.self) else {
-                fatalError(ErrorMessage.dependency.localizedDescription)
-            }
-            return ProfileInfoCreateManager(accountID: accountID,
-                                     remoteStorageService: remoteStorageService,
-                                     accountService: accountService,
-                                     quickAccessManager: quickAccessManager)
-        }
         
         container.register(ProfileInfoManagerProtocol.self, name: ProfileInfoManagersName.account.rawValue) { r in
             guard let account = r.resolve(AccountModelProtocol.self),

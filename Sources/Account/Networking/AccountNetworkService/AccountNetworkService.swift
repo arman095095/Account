@@ -12,18 +12,15 @@ import UIKit
 import NetworkServices
 
 protocol AccountNetworkServiceProtocol {
-    func createAccount(accountID: String,
-                       profile: ProfileNetworkModelProtocol,
-                       completion: @escaping (Result<Void, Error>) -> Void)
-    func editAccount(accountID: String,
-                     profile: ProfileNetworkModelProtocol,
-                     completion: @escaping (Result<Void, Error>) -> Void)
+    func setAccountInfo(accountID: String,
+                        profile: ProfileNetworkModelProtocol,
+                        completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class AccountNetworkService {
     
     private let networkServiceRef: Firestore
-
+    
     private var usersRef: CollectionReference {
         return networkServiceRef.collection(URLComponents.Paths.users.rawValue)
     }
@@ -38,33 +35,14 @@ final class AccountNetworkService {
 
 extension AccountNetworkService: AccountNetworkServiceProtocol {
     
-    public func createAccount(accountID: String,
-                              profile: ProfileNetworkModelProtocol,
-                              completion: @escaping (Result<Void, Error>) -> Void) {
+    public func setAccountInfo(accountID: String,
+                               profile: ProfileNetworkModelProtocol,
+                               completion: @escaping (Result<Void, Error>) -> Void) {
         if !InternetConnectionManager.isConnectedToNetwork() {
             completion(.failure(ConnectionError.noInternet))
             return
         }
-        self.setAccount(accountID: accountID, user: profile, completion: completion)
-    }
-    
-    public func editAccount(accountID: String,
-                            profile: ProfileNetworkModelProtocol,
-                            completion: @escaping (Result<Void, Error>) -> Void) {
-        if !InternetConnectionManager.isConnectedToNetwork() {
-            completion(.failure(ConnectionError.noInternet))
-            return
-        }
-        setAccount(accountID: accountID, user: profile, completion: completion)
-    }
-}
-
-private extension AccountNetworkService {
-    
-    func setAccount(accountID: String,
-                    user: ProfileNetworkModelProtocol,
-                    completion: @escaping (Result<Void,Error>) -> Void) {
-        self.usersRef.document(accountID).setData(user.convertModelToDictionary()) { (error) in
+        self.usersRef.document(accountID).setData(profile.convertModelToDictionary()) { (error) in
             if let error = error {
                 completion(.failure(error))
                 return

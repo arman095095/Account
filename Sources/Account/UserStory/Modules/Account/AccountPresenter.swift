@@ -22,7 +22,7 @@ extension DateFormatService: AccountDateFormatProtocol { }
 
 enum InputFlowContext {
     case edit(dto: ProfileModelProtocol)
-    case create
+    case create(userID: String)
     
     var managerName: String {
         switch self {

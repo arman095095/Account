@@ -25,8 +25,8 @@ public final class AccountUserStory {
 
 extension AccountUserStory: AccountRouteMap {
 
-    public func createAccountModule() -> AccountModule {
-        return accountModule(context: .create)
+    public func createAccountModule(userID: String) -> AccountModule {
+        return accountModule(context: .create(userID: userID))
     }
     
     public func editAccountModule() -> AccountModule {
@@ -52,8 +52,9 @@ extension AccountUserStory: RouteMapPrivate {
         switch context {
         case .edit:
             profileManagerName = .account
-        case .create:
+        case .create(let userID):
             profileManagerName = .auth
+            container.register(String.self, name: Names.accountID.rawValue) { _ in userID }
         }
         guard let alertManager = safeResolver.resolve(AlertManagerProtocol.self),
               let profileInfoManager = safeResolver.resolve(ProfileInfoManagerProtocol.self,
@@ -70,4 +71,8 @@ extension AccountUserStory: RouteMapPrivate {
 
 enum ErrorMessage: LocalizedError {
     case dependency
+}
+
+enum Names: String {
+    case accountID
 }

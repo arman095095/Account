@@ -14,10 +14,6 @@ import Services
 
 final class ProfileCreateInfoManagerAssembly: Assembly {
 
-    enum Names: String {
-        case accountID
-    }
-
     func assemble(container: Container) {
         container.register(ProfileInfoManagerProtocol.self,
                            name: ProfileInfoManagersName.auth.rawValue) { r in
